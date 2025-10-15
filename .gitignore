@@ -103,3 +103,10 @@ temp/
 # Celery
 celerybeat-schedule
 celerybeat.pid
+
+
+# Other
+*.ini
+*.conf
+*.yml
+*.yaml
