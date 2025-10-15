@@ -1,5 +1,7 @@
 fastapi
 uvicorn
+pydantic-settings
+python-json-logger
 sqlalchemy
 psycopg2-binary
 aioredis

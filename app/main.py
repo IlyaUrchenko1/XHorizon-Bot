@@ -1,19 +1,21 @@
 import uvicorn
 from fastapi import FastAPI
-from app.core.config import settings
-from app.core.logging_config import setup_logging
-from app.core.metrics import setup_instrumentator
+from settings.config import config
+from settings.logging_config import setup_logging
 from app.api.v1.endpoints.health import router as health_router
+from prometheus_fastapi_instrumentator import Instrumentator
+
 
 def create_app() -> FastAPI:
-    setup_logging(settings.log_level)
+    setup_logging(config.LOG_LEVEL)
     app = FastAPI()
     app.include_router(health_router)
 
-    setup_instrumentator(app)
+    Instrumentator().instrument(app).expose(app)
     return app
+
 
 app = create_app()
 
 if __name__ == "__main__":
-    uvicorn.run("app.main:app", host=settings.host, port=settings.port, reload=True)
+    uvicorn.run("app.main:app", host=config.HOST, port=config.PORT, reload=True)
